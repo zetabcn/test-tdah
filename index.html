@@ -1,0 +1,1168 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Test TDAH — ¿Tu mente funciona diferente?</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0E0C1A;
+  --bg2: #16132A;
+  --bg3: #1E1A35;
+  --surface: #231F3E;
+  --surface2: #2C2850;
+  --accent: #7B6EF6;
+  --accent2: #A99FF8;
+  --accent-glow: rgba(123,110,246,0.18);
+  --text: #EDE9FF;
+  --text2: #A89EC8;
+  --text3: #6B6390;
+  --border: rgba(123,110,246,0.2);
+  --border2: rgba(123,110,246,0.08);
+  --green: #4CD7A0;
+  --green-bg: rgba(76,215,160,0.1);
+  --amber: #F5C063;
+  --amber-bg: rgba(245,192,99,0.1);
+  --coral: #F07B6B;
+  --coral-bg: rgba(240,123,107,0.1);
+  --purple-light: #C4B8FC;
+}
+
+*{box-sizing:border-box;margin:0;padding:0}
+
+html{scroll-behavior:smooth}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── NOISE TEXTURE ── */
+body::before {
+  content:'';
+  position:fixed;
+  inset:0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events:none;
+  z-index:0;
+}
+
+/* ── GLOW BLOBS ── */
+.blob {
+  position:fixed;
+  border-radius:50%;
+  filter:blur(80px);
+  opacity:0.12;
+  pointer-events:none;
+  z-index:0;
+}
+.blob-1{width:500px;height:500px;background:#7B6EF6;top:-150px;left:-100px}
+.blob-2{width:350px;height:350px;background:#4CD7A0;bottom:100px;right:-80px}
+.blob-3{width:300px;height:300px;background:#F07B6B;top:50%;left:60%}
+
+/* ── LAYOUT ── */
+.container {
+  max-width: 780px;
+  margin: 0 auto;
+  padding: 0 24px;
+  position: relative;
+  z-index: 1;
+}
+
+/* ── HERO ── */
+.hero {
+  padding: 80px 0 60px;
+  text-align: center;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--accent-glow);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 6px 16px;
+  font-size: 12px;
+  color: var(--accent2);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 28px;
+  font-weight: 500;
+}
+
+.hero-badge::before {
+  content:'';
+  width:6px;height:6px;
+  border-radius:50%;
+  background:var(--green);
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,100%{opacity:1;transform:scale(1)}
+  50%{opacity:0.5;transform:scale(1.4)}
+}
+
+.hero h1 {
+  font-family: 'DM Serif Display', serif;
+  font-size: clamp(36px, 7vw, 64px);
+  line-height: 1.1;
+  color: var(--text);
+  margin-bottom: 12px;
+  letter-spacing: -0.02em;
+}
+
+.hero h1 em {
+  font-style: italic;
+  color: var(--accent2);
+}
+
+.hero-sub {
+  font-size: 18px;
+  color: var(--text2);
+  line-height: 1.7;
+  max-width: 560px;
+  margin: 0 auto 40px;
+  font-weight: 300;
+}
+
+/* ── INTRO SECTION ── */
+.intro {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: 24px;
+  padding: 48px;
+  margin-bottom: 60px;
+}
+
+.intro h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 28px;
+  color: var(--text);
+  margin-bottom: 20px;
+  letter-spacing: -0.01em;
+}
+
+.intro p {
+  font-size: 15px;
+  color: var(--text2);
+  line-height: 1.85;
+  margin-bottom: 16px;
+  font-weight: 300;
+}
+
+.intro p:last-child { margin-bottom: 0; }
+
+.intro strong { color: var(--accent2); font-weight: 500; }
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  margin: 32px 0;
+}
+
+.stat-card {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 16px;
+  padding: 20px;
+  text-align: center;
+}
+
+.stat-num {
+  font-family: 'DM Serif Display', serif;
+  font-size: 32px;
+  color: var(--accent2);
+  display: block;
+  margin-bottom: 6px;
+}
+
+.stat-label {
+  font-size: 12px;
+  color: var(--text3);
+  line-height: 1.5;
+  font-weight: 400;
+}
+
+.types-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin: 24px 0;
+}
+
+.type-card {
+  background: var(--surface);
+  border: 1px solid var(--border2);
+  border-radius: 14px;
+  padding: 18px 20px;
+}
+
+.type-icon {
+  font-size: 22px;
+  margin-bottom: 8px;
+  display: block;
+}
+
+.type-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.type-desc {
+  font-size: 12px;
+  color: var(--text3);
+  line-height: 1.6;
+}
+
+/* ── DISCLAIMER BEFORE TEST ── */
+.disclaimer-box {
+  background: var(--amber-bg);
+  border: 1px solid rgba(245,192,99,0.25);
+  border-radius: 14px;
+  padding: 18px 22px;
+  margin-bottom: 40px;
+  display: flex;
+  gap: 14px;
+  align-items: flex-start;
+}
+
+.disclaimer-box .icon { font-size: 20px; flex-shrink: 0; margin-top: 1px; }
+
+.disclaimer-box p {
+  font-size: 13px;
+  color: var(--amber);
+  line-height: 1.7;
+  opacity: 0.9;
+}
+
+.disclaimer-box strong { color: var(--amber); font-weight: 500; }
+
+/* ── TEST WRAPPER ── */
+#test-app {
+  margin-bottom: 80px;
+}
+
+/* ── PROGRESS ── */
+.progress-wrap {
+  margin-bottom: 32px;
+  position: sticky;
+  top: 16px;
+  z-index: 10;
+}
+
+.progress-card {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 16px;
+  padding: 16px 24px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  backdrop-filter: blur(12px);
+}
+
+.prog-info {
+  flex: 1;
+}
+
+.prog-section {
+  font-size: 11px;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.07em;
+  margin-bottom: 4px;
+  font-weight: 500;
+}
+
+.prog-bar-wrap {
+  background: var(--surface);
+  border-radius: 4px;
+  height: 4px;
+  overflow: hidden;
+  flex:1;
+}
+
+.prog-bar-fill {
+  height: 100%;
+  background: linear-gradient(90deg, var(--accent), var(--green));
+  border-radius: 4px;
+  transition: width 0.4s cubic-bezier(0.4,0,0.2,1);
+}
+
+.prog-pct {
+  font-size: 13px;
+  color: var(--accent2);
+  font-weight: 500;
+  min-width: 36px;
+  text-align: right;
+}
+
+/* ── SECTION HEADER ── */
+.section-header {
+  margin-bottom: 24px;
+}
+
+.section-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--accent-glow);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  padding: 4px 14px;
+  font-size: 11px;
+  color: var(--accent2);
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  margin-bottom: 12px;
+  font-weight: 500;
+}
+
+.section-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 26px;
+  color: var(--text);
+  letter-spacing: -0.01em;
+}
+
+/* ── QUESTION BLOCK ── */
+.q-block {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: 18px;
+  padding: 24px 28px;
+  margin-bottom: 14px;
+  transition: border-color 0.2s;
+}
+
+.q-block.answered {
+  border-color: rgba(123,110,246,0.3);
+}
+
+.q-counter {
+  font-size: 11px;
+  color: var(--text3);
+  margin-bottom: 10px;
+  letter-spacing: 0.04em;
+}
+
+.q-text {
+  font-size: 15px;
+  color: var(--text);
+  line-height: 1.7;
+  margin-bottom: 18px;
+  font-weight: 300;
+}
+
+.options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.opt-btn {
+  border: 1px solid var(--border2);
+  background: var(--surface);
+  border-radius: 100px;
+  padding: 7px 16px;
+  font-size: 13px;
+  color: var(--text2);
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.15s cubic-bezier(0.4,0,0.2,1);
+  font-weight: 400;
+}
+
+.opt-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent2);
+  background: var(--accent-glow);
+}
+
+.opt-btn.selected {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  font-weight: 500;
+}
+
+/* ── NAV ── */
+.nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 32px;
+  padding: 20px 0;
+  border-top: 1px solid var(--border2);
+}
+
+.nav-btn {
+  border: 1px solid var(--border);
+  background: transparent;
+  border-radius: 12px;
+  padding: 12px 28px;
+  font-size: 14px;
+  color: var(--text2);
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s;
+  font-weight: 400;
+}
+
+.nav-btn:hover:not(:disabled) {
+  background: var(--surface);
+  color: var(--text);
+}
+
+.nav-btn:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.nav-btn.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+  font-weight: 500;
+}
+
+.nav-btn.primary:hover {
+  background: #6B5EE6;
+  border-color: #6B5EE6;
+  color: #fff;
+}
+
+.nav-step { font-size: 13px; color: var(--text3); }
+
+/* ── RESULTS ── */
+#results { display: none; }
+
+.results-hero {
+  text-align: center;
+  padding: 60px 0 40px;
+}
+
+.results-hero h2 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 42px;
+  color: var(--text);
+  margin-bottom: 8px;
+  letter-spacing: -0.02em;
+}
+
+.score-big {
+  font-family: 'DM Serif Display', serif;
+  font-size: 100px;
+  line-height: 1;
+  color: var(--accent2);
+  display: block;
+  margin: 20px 0 8px;
+  letter-spacing: -0.04em;
+}
+
+.score-sub { font-size: 14px; color: var(--text3); }
+
+.level-badge {
+  display: inline-block;
+  padding: 8px 24px;
+  border-radius: 100px;
+  font-size: 14px;
+  font-weight: 500;
+  margin: 16px 0;
+  letter-spacing: 0.04em;
+}
+
+.level-low { background: var(--green-bg); color: var(--green); border: 1px solid rgba(76,215,160,0.25); }
+.level-mod { background: var(--amber-bg); color: var(--amber); border: 1px solid rgba(245,192,99,0.25); }
+.level-high { background: var(--accent-glow); color: var(--accent2); border: 1px solid var(--border); }
+.level-very { background: var(--coral-bg); color: var(--coral); border: 1px solid rgba(240,123,107,0.25); }
+
+.result-summary {
+  background: var(--bg2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px 36px;
+  margin-bottom: 24px;
+  text-align: left;
+}
+
+.result-summary h3 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  color: var(--text);
+  margin-bottom: 12px;
+}
+
+.result-summary p {
+  font-size: 15px;
+  color: var(--text2);
+  line-height: 1.85;
+  font-weight: 300;
+}
+
+/* ── DIMENSION BARS ── */
+.dims-section { margin-bottom: 32px; }
+
+.dims-title {
+  font-size: 11px;
+  color: var(--text3);
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin-bottom: 16px;
+  font-weight: 500;
+}
+
+.dim-row {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border2);
+}
+
+.dim-row:last-child { border-bottom: none; }
+
+.dim-label {
+  font-size: 13px;
+  color: var(--text2);
+  width: 180px;
+  flex-shrink: 0;
+  font-weight: 400;
+}
+
+.dim-bar-wrap {
+  flex: 1;
+  background: var(--surface);
+  border-radius: 4px;
+  height: 6px;
+  overflow: hidden;
+}
+
+.dim-fill {
+  height: 100%;
+  border-radius: 4px;
+  transition: width 1s cubic-bezier(0.4,0,0.2,1);
+}
+
+.dim-pct {
+  font-size: 13px;
+  color: var(--text3);
+  min-width: 36px;
+  text-align: right;
+  font-weight: 500;
+}
+
+/* ── BEHAVIOUR CARDS ── */
+.behaviours-section { margin-bottom: 32px; }
+
+.behaviours-title {
+  font-family: 'DM Serif Display', serif;
+  font-size: 24px;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.behaviours-sub {
+  font-size: 14px;
+  color: var(--text3);
+  margin-bottom: 24px;
+  font-weight: 300;
+}
+
+.beh-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 14px;
+}
+
+.beh-card {
+  background: var(--bg2);
+  border: 1px solid var(--border2);
+  border-radius: 16px;
+  padding: 20px 22px;
+  transition: border-color 0.2s;
+}
+
+.beh-card:hover { border-color: var(--border); }
+
+.beh-icon {
+  font-size: 24px;
+  margin-bottom: 10px;
+  display: block;
+}
+
+.beh-name {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.beh-desc {
+  font-size: 13px;
+  color: var(--text3);
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+/* ── NEXT STEPS ── */
+.next-steps {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 32px 36px;
+  margin-bottom: 32px;
+}
+
+.next-steps h3 {
+  font-family: 'DM Serif Display', serif;
+  font-size: 22px;
+  color: var(--text);
+  margin-bottom: 20px;
+}
+
+.step-list { list-style: none; }
+
+.step-list li {
+  display: flex;
+  gap: 14px;
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border2);
+  align-items: flex-start;
+}
+
+.step-list li:last-child { border-bottom: none; }
+
+.step-num {
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  background: var(--accent-glow);
+  border: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  color: var(--accent2);
+  font-weight: 500;
+  flex-shrink: 0;
+  margin-top: 1px;
+}
+
+.step-text {
+  font-size: 14px;
+  color: var(--text2);
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+.step-text strong { color: var(--text); font-weight: 500; }
+
+/* ── FOOTER DISCLAIMER ── */
+.final-disclaimer {
+  background: rgba(240,123,107,0.06);
+  border: 1px solid rgba(240,123,107,0.18);
+  border-radius: 14px;
+  padding: 18px 22px;
+  margin-bottom: 40px;
+}
+
+.final-disclaimer p {
+  font-size: 13px;
+  color: rgba(240,123,107,0.8);
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+.final-disclaimer strong { color: var(--coral); font-weight: 500; }
+
+/* ── RESTART ── */
+.restart-wrap { text-align: center; padding-bottom: 80px; }
+
+.restart-btn {
+  border: 1px solid var(--border);
+  background: transparent;
+  border-radius: 12px;
+  padding: 14px 36px;
+  font-size: 14px;
+  color: var(--text2);
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all 0.2s;
+  font-weight: 400;
+}
+
+.restart-btn:hover {
+  background: var(--surface);
+  color: var(--text);
+}
+
+/* ── FOOTER ── */
+footer {
+  border-top: 1px solid var(--border2);
+  padding: 32px 0;
+  text-align: center;
+}
+
+footer p {
+  font-size: 12px;
+  color: var(--text3);
+  line-height: 1.8;
+  font-weight: 300;
+}
+
+footer a { color: var(--accent2); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp {
+  from{opacity:0;transform:translateY(20px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+.fade-in {
+  animation: fadeUp 0.5s cubic-bezier(0.4,0,0.2,1) both;
+}
+
+/* ── RESPONSIVE ── */
+@media(max-width:600px){
+  .intro{padding:28px 22px}
+  .stats-grid{grid-template-columns:1fr 1fr;gap:10px}
+  .types-grid{grid-template-columns:1fr}
+  .q-block{padding:18px 18px}
+  .beh-grid{grid-template-columns:1fr}
+  .dim-label{width:120px;font-size:12px}
+  .result-summary,.next-steps{padding:24px 22px}
+  .score-big{font-size:72px}
+  .hero{padding:50px 0 40px}
+  .progress-card{flex-wrap:wrap;gap:8px}
+}
+</style>
+</head>
+<body>
+
+<div class="blob blob-1"></div>
+<div class="blob blob-2"></div>
+<div class="blob blob-3"></div>
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero">
+  <div class="container">
+    <div class="hero-badge">Autoevaluación gratuita · 42 preguntas</div>
+    <h1>¿Tu mente funciona<br><em>diferente</em>?</h1>
+    <p class="hero-sub">Un test de autoexploración basado en los criterios del DSM-5 para ayudarte a entender si tus patrones de pensamiento y comportamiento pueden estar relacionados con el TDAH.</p>
+  </div>
+</section>
+
+<!-- ══════════ INTRO ══════════ -->
+<section>
+  <div class="container">
+    <div class="intro">
+      <h2>¿Qué es el TDAH?</h2>
+      <p>El <strong>Trastorno por Déficit de Atención e Hiperactividad (TDAH)</strong> es una condición neurológica del desarrollo que afecta cómo el cerebro gestiona la atención, los impulsos y la actividad. No es una falta de voluntad ni pereza — es una diferencia real en cómo está configurado y conectado el cerebro.</p>
+      <p>Muchas personas llegan a la adultez sin saber que lo tienen, porque aprendieron a <strong>enmascarar y compensar</strong> sus dificultades a costa de mucho esfuerzo invisible. Si alguna vez sentiste que te esfuerzas el doble que los demás para obtener los mismos resultados, esto puede resonar contigo.</p>
+
+      <div class="stats-grid">
+        <div class="stat-card">
+          <span class="stat-num">5–7%</span>
+          <span class="stat-label">de la población adulta tiene TDAH sin diagnosticar</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">70%</span>
+          <span class="stat-label">de los síntomas persisten en la edad adulta</span>
+        </div>
+        <div class="stat-card">
+          <span class="stat-num">3–4×</span>
+          <span class="stat-label">más probable que el diagnóstico llegue tarde en mujeres</span>
+        </div>
+      </div>
+
+      <h2 style="margin-top:8px">Tres subtipos principales</h2>
+      <div class="types-grid">
+        <div class="type-card">
+          <span class="type-icon">🌀</span>
+          <div class="type-name">Predominantemente inatento</div>
+          <div class="type-desc">Dificultad para mantener el foco, olvidadizo, se pierde en detalles. Menos visible pero igual de impactante.</div>
+        </div>
+        <div class="type-card">
+          <span class="type-icon">⚡</span>
+          <div class="type-name">Predominantemente hiperactivo-impulsivo</div>
+          <div class="type-desc">Inquietud física y mental, habla sin filtro, dificultad para esperar. Más reconocible externamente.</div>
+        </div>
+        <div class="type-card" style="grid-column:1/-1">
+          <span class="type-icon">🔄</span>
+          <div class="type-name">Presentación combinada</div>
+          <div class="type-desc">La más frecuente en adultos. Mezcla de inatención, hiperactividad e impulsividad en diferentes grados y contextos.</div>
+        </div>
+      </div>
+
+      <p>El TDAH no define tus límites — muchas de las mentes más creativas, emprendedoras y apasionadas del mundo son neurodivergentes. Este test es el primer paso para <strong>entenderte mejor</strong>.</p>
+    </div>
+
+    <div class="disclaimer-box">
+      <span class="icon">⚠️</span>
+      <p><strong>Importante:</strong> Este test es una herramienta de autoexploración, no un diagnóstico clínico. Solo un profesional de salud mental cualificado puede diagnosticar TDAH. Los resultados pueden solaparse con ansiedad, depresión, trauma o trastorno del espectro autista (TEA).</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ TEST ══════════ -->
+<section id="test-app">
+  <div class="container">
+
+    <div class="progress-wrap" id="progress-wrap">
+      <div class="progress-card">
+        <div class="prog-info">
+          <div class="prog-section" id="prog-section">Sección 1 de 7</div>
+        </div>
+        <div class="prog-bar-wrap" style="min-width:120px">
+          <div class="prog-bar-fill" id="prog-fill" style="width:0%"></div>
+        </div>
+        <div class="prog-pct" id="prog-pct">0%</div>
+      </div>
+    </div>
+
+    <div id="quiz-area"></div>
+
+    <div class="nav" id="nav">
+      <button class="nav-btn" id="prevBtn" onclick="changePage(-1)" disabled>← Anterior</button>
+      <span class="nav-step" id="nav-step">Página 1 / 7</span>
+      <button class="nav-btn primary" id="nextBtn" onclick="changePage(1)">Siguiente →</button>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════ RESULTS ══════════ -->
+<section id="results">
+  <div class="container">
+    <div class="results-hero fade-in">
+      <h2>Tu resultado</h2>
+      <span class="score-big" id="res-pct">—</span>
+      <div class="score-sub" id="res-sub">puntuación global de síntomas</div>
+      <div id="res-badge"></div>
+    </div>
+
+    <div class="result-summary fade-in" id="res-summary"></div>
+
+    <div class="dims-section fade-in">
+      <div class="dims-title">Puntuación por dimensión</div>
+      <div id="dims-rows"></div>
+    </div>
+
+    <div class="behaviours-section fade-in">
+      <div class="behaviours-title">Comportamientos y síntomas del TDAH</div>
+      <div class="behaviours-sub">Estas son las manifestaciones más comunes en personas con diagnóstico — independientemente de tu resultado, leerlos puede ayudarte a reconocerte.</div>
+      <div class="beh-grid" id="beh-grid"></div>
+    </div>
+
+    <div class="next-steps fade-in">
+      <h3>¿Qué puedo hacer ahora?</h3>
+      <ul class="step-list" id="steps-list"></ul>
+    </div>
+
+    <div class="final-disclaimer fade-in">
+      <p><strong>Recordatorio clínico:</strong> Este test se basa en los criterios del DSM-5 pero no constituye ni sustituye un diagnóstico profesional. El TDAH comparte síntomas con ansiedad generalizada, trastorno bipolar, depresión, trauma complejo (CPTSD) y TEA. Un diagnóstico formal requiere entrevista clínica, historial de vida y en algunos casos pruebas neuropsicológicas.</p>
+    </div>
+
+    <div class="restart-wrap">
+      <button class="restart-btn" onclick="restartTest()">↩ Repetir el test</button>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <div class="container">
+    <p>Test desarrollado con base en los criterios diagnósticos del <strong>DSM-5</strong> (Manual Diagnóstico y Estadístico de los Trastornos Mentales, 5.ª edición).<br>
+    No almacenamos ningún dato. Todo el procesamiento ocurre localmente en tu dispositivo.<br>
+    <a href="https://www.who.int/news-room/fact-sheets/detail/attention-deficit-hyperactivity-disorder" target="_blank">OMS sobre TDAH</a> ·
+    <a href="https://chadd.org/" target="_blank">CHADD (recurso en inglés)</a> ·
+    <a href="https://www.tdahytu.es/" target="_blank">TDAH y Tú (España)</a>
+    </p>
+  </div>
+</footer>
+
+<script>
+const sections = [
+  {
+    title: "Atención y concentración",
+    tag: "Atención",
+    color: "#7B6EF6",
+    questions: [
+      "¿Tienes dificultad para mantener la atención en tareas largas o aburridas, aunque sean importantes?",
+      "¿Cometes errores por descuido en el trabajo, estudios o tareas cotidianas?",
+      "¿Te cuesta escuchar cuando alguien te habla directamente, aunque no haya distracciones obvias?",
+      "¿Saltas de una tarea a otra sin terminar ninguna?",
+      "¿Pierdes el hilo fácilmente cuando lees un texto largo o ves una película?",
+      "¿Te resulta muy difícil hacer tareas que requieren esfuerzo mental sostenido sin recompensa inmediata?"
+    ]
+  },
+  {
+    title: "Hiperactividad e inquietud",
+    tag: "Hiperactividad",
+    color: "#F07B6B",
+    questions: [
+      "¿Mueves constantemente las manos, pies o te retuerces en la silla sin darte cuenta?",
+      "¿Sientes una inquietud interior que te hace difícil estar quieto/a incluso cuando lo intentas?",
+      "¿Hablas excesivamente o interrumpes a los demás sin poder evitarlo?",
+      "¿Te resulta muy difícil esperar tu turno en conversaciones o filas?",
+      "¿Sientes que tu 'motor interno' va demasiado rápido, como si no pudieras apagarlo?",
+      "¿Buscas constantemente actividad o estimulación, incluso cuando deberías descansar?"
+    ]
+  },
+  {
+    title: "Impulsividad y control de impulsos",
+    tag: "Impulsividad",
+    color: "#F5C063",
+    questions: [
+      "¿Dices cosas sin pensarlas y luego te arrepientes?",
+      "¿Tomas decisiones impulsivas (compras, cambios de vida, reacciones) que después lamentas?",
+      "¿Interrumpes o completas las frases de los demás antes de que terminen?",
+      "¿Tienes dificultad para controlar reacciones emocionales intensas (enojo, frustración, euforia)?",
+      "¿Empiezas proyectos con mucho entusiasmo pero los abandonas a los pocos días?",
+      "¿Te resulta difícil postergar gratificaciones o recompensas, aunque sea por poco tiempo?"
+    ]
+  },
+  {
+    title: "Función ejecutiva y memoria",
+    tag: "Función ejecutiva",
+    color: "#4CD7A0",
+    questions: [
+      "¿Olvidas cosas que acabas de hacer, leer o que te dijeron hace poco?",
+      "¿Pierdes objetos frecuentemente (llaves, teléfono, gafas, documentos)?",
+      "¿Te cuesta planificar y organizar tareas de varios pasos?",
+      "¿Tienes dificultad para gestionar el tiempo: llegas tarde, subestimas cuánto tarda algo?",
+      "¿Tienes el 'caos mental': muchas ideas pero no sabes por dónde empezar?",
+      "¿Necesitas mucha energía para hacer cosas que parecen sencillas para otros (iniciar tareas, ordenar)?"
+    ]
+  },
+  {
+    title: "Regulación emocional",
+    tag: "Emociones",
+    color: "#C4B8FC",
+    questions: [
+      "¿Tus emociones cambian con rapidez e intensidad, aunque el estímulo sea pequeño?",
+      "¿Experimentas un rechazo emocional muy intenso ante críticas, aunque sean leves?",
+      "¿Tienes momentos de desmotivación total o tristeza reactiva que duran horas o días?",
+      "¿Te 'atascas' en un pensamiento o emoción y te cuesta dejarlo ir (rumia)?",
+      "¿Sientes frustración o ansiedad cuando los planes cambian de golpe?",
+      "¿Tienes baja tolerancia al aburrimiento, la espera o la incertidumbre?"
+    ]
+  },
+  {
+    title: "Hiperfoco y procesamiento sensorial",
+    tag: "Hiperfoco · Sentidos",
+    color: "#4CD7A0",
+    questions: [
+      "¿Hay actividades en las que te 'pierdes' durante horas, perdiendo noción del tiempo?",
+      "¿Cuando algo te apasiona, es casi imposible parar aunque tengas otras obligaciones urgentes?",
+      "¿Eres muy sensible a ruidos, luces, texturas, olores o temperaturas que otros no notan?",
+      "¿Te cuesta filtrar distracciones sonoras o visuales en entornos con mucha estimulación?",
+      "¿Tienes dificultad para cambiar rápido entre tareas o adaptarte a cambios de planes?",
+      "¿Sientes que necesitas más estimulación que otros para estar alerta y motivado/a?"
+    ]
+  },
+  {
+    title: "Impacto en tu vida cotidiana",
+    tag: "Impacto funcional",
+    color: "#A99FF8",
+    questions: [
+      "¿Estas dificultades te han causado problemas en el trabajo, estudios o relaciones personales?",
+      "¿Has desarrollado estrategias complejas para compensar estas dificultades (listas, alarmas, rituales)?",
+      "¿Sientes que te esfuerzas mucho más que otros para lograr los mismos resultados?",
+      "¿Has recibido comentarios como 'eres despistado/a', 'no prestas atención' o 'eres muy intenso/a'?",
+      "¿Estas dificultades estaban presentes desde la infancia, no solo en la adultez?",
+      "¿Sientes que tu mente funciona de manera diferente a la mayoría de personas?"
+    ]
+  }
+];
+
+const opts = ["Nunca","Raramente","A veces","Frecuentemente","Casi siempre"];
+let answers = {};
+let page = 0;
+
+function buildPage(p) {
+  const s = sections[p];
+  let html = `<div class="section-header fade-in">
+    <div class="section-tag">${s.tag}</div>
+    <div class="section-title">${s.title}</div>
+  </div>`;
+
+  s.questions.forEach((q, i) => {
+    const key = `${p}_${i}`;
+    const answered = answers[key] !== undefined ? ' answered' : '';
+    html += `<div class="q-block${answered} fade-in" style="animation-delay:${i*0.05}s">
+      <div class="q-counter">Pregunta ${p*6+i+1} de 42</div>
+      <div class="q-text">${q}</div>
+      <div class="options">`;
+    opts.forEach((o, v) => {
+      const sel = answers[key] === v ? ' selected' : '';
+      html += `<button class="opt-btn${sel}" onclick="selectAns('${key}',${v},this)">${o}</button>`;
+    });
+    html += `</div></div>`;
+  });
+
+  document.getElementById('quiz-area').innerHTML = html;
+  updateProgress();
+
+  document.getElementById('prevBtn').disabled = p === 0;
+  const isLast = p === sections.length - 1;
+  const nb = document.getElementById('nextBtn');
+  nb.textContent = isLast ? 'Ver mis resultados →' : 'Siguiente →';
+  nb.onclick = isLast ? showResults : () => changePage(1);
+  document.getElementById('nav-step').textContent = `Página ${p+1} / ${sections.length}`;
+  document.getElementById('prog-section').textContent = `Sección ${p+1} de ${sections.length}: ${s.tag}`;
+  window.scrollTo({top: document.getElementById('test-app').offsetTop - 20, behavior:'smooth'});
+}
+
+function updateProgress() {
+  const answered = Object.keys(answers).length;
+  const pct = Math.round(answered / 42 * 100);
+  document.getElementById('prog-fill').style.width = pct + '%';
+  document.getElementById('prog-pct').textContent = pct + '%';
+}
+
+function selectAns(key, v, btn) {
+  answers[key] = v;
+  btn.closest('.options').querySelectorAll('.opt-btn').forEach(b => b.classList.remove('selected'));
+  btn.classList.add('selected');
+  btn.closest('.q-block').classList.add('answered');
+  updateProgress();
+}
+
+function changePage(dir) {
+  page = Math.max(0, Math.min(sections.length-1, page + dir));
+  buildPage(page);
+}
+
+function showResults() {
+  const answered = Object.keys(answers).length;
+  if(answered < 28) {
+    if(!confirm(`Hay ${42-answered} preguntas sin responder. ¿Quieres ver los resultados de todas formas?`)) return;
+  }
+
+  let dimScores = sections.map((s, si) => {
+    let total = 0, count = 0;
+    for(let i=0;i<6;i++){
+      if(answers[`${si}_${i}`] !== undefined){ total += answers[`${si}_${i}`]; count++; }
+    }
+    return count > 0 ? Math.round(total/count*25) : 0;
+  });
+
+  let totalRaw = 0, totalCount = 0;
+  Object.values(answers).forEach(v => { totalRaw += v; totalCount++; });
+  const totalPct = totalCount > 0 ? Math.round(totalRaw / (totalCount * 4) * 100) : 0;
+
+  let level, levelClass, title, desc;
+  if(totalPct < 25){
+    level="Bajo"; levelClass="level-low";
+    title="Perfil neurotípico o síntomas muy leves";
+    desc="Tus respuestas no muestran un patrón significativo de síntomas TDAH. Es normal experimentar algunas de estas situaciones ocasionalmente — todos lo hacemos. Si hay áreas específicas que te generan dificultad, vale la pena explorarlas con un profesional, pero el patrón general no es consistente con TDAH.";
+  } else if(totalPct < 45){
+    level="Moderado"; levelClass="level-mod";
+    title="Algunos rasgos presentes, puede valer la pena explorar";
+    desc="Presentas ciertos patrones que podrían estar relacionados con TDAH, ansiedad, perfeccionismo o simplemente el estrés moderno. Estos síntomas pueden ser subclínicos (por debajo del umbral diagnóstico) o parte de otro espectro. Si estas dificultades te generan malestar cotidiano, una consulta con un especialista puede darte claridad.";
+  } else if(totalPct < 65){
+    level="Elevado"; levelClass="level-high";
+    title="Patrón consistente con TDAH o neurodivergencia";
+    desc="Tus respuestas muestran un patrón notable y consistente con los síntomas del TDAH. Esto no es un diagnóstico, pero sí es una señal clara de que existe un patrón real que merece atención profesional. Muchas personas en este rango han estado compensando estas dificultades durante años sin saber por qué les costaba tanto.";
+  } else {
+    level="Muy elevado"; levelClass="level-very";
+    title="Perfil fuertemente compatible con TDAH";
+    desc="Tus respuestas reflejan un perfil muy consistente con TDAH y/o neurodivergencia significativa. Este resultado no es sorprendente si ya lo sospechabas — muchas personas lo describen como 'finalmente tener un nombre para lo que siempre sentí'. Recomendamos encarecidamente buscar evaluación con un psiquiatra o psicólogo especializado en TDAH adulto.";
+  }
+
+  document.getElementById('res-pct').textContent = totalPct + '%';
+  document.getElementById('res-badge').innerHTML = `<div class="level-badge ${levelClass}">${level}</div>`;
+  document.getElementById('res-summary').innerHTML = `<h3>${title}</h3><p>${desc}</p>`;
+
+  let dimsHtml = '';
+  sections.forEach((s, si) => {
+    dimsHtml += `<div class="dim-row">
+      <div class="dim-label">${s.tag}</div>
+      <div class="dim-bar-wrap"><div class="dim-fill" id="df-${si}" style="width:0%;background:${s.color}"></div></div>
+      <div class="dim-pct">${dimScores[si]}%</div>
+    </div>`;
+  });
+  document.getElementById('dims-rows').innerHTML = dimsHtml;
+  setTimeout(() => {
+    sections.forEach((s, si) => {
+      const el = document.getElementById(`df-${si}`);
+      if(el) el.style.width = dimScores[si] + '%';
+    });
+  }, 200);
+
+  const behaviours = [
+    {icon:"🎯", name:"Déficit de atención selectiva", desc:"Dificultad para filtrar estímulos irrelevantes. El cerebro TDAH no puede apagar información de fondo, haciendo que cualquier distracción compita con la tarea principal."},
+    {icon:"⚡", name:"Disregulación del sistema de recompensa", desc:"El cerebro TDAH tiene niveles más bajos de dopamina en reposo. Necesita estímulos más intensos o novedosos para activarse, lo que explica la procrastinación y el hiperfoco."},
+    {icon:"🔥", name:"Hiperfoco paradójico", desc:"La misma mente que no puede concentrarse en tareas aburridas puede 'pegarse' a algo que le apasiona durante horas, ignorando hambre, cansancio o responsabilidades."},
+    {icon:"💭", name:"Memoria de trabajo débil", desc:"Como una pizarra que se borra sola. Las instrucciones, ideas o tareas se evaporan segundos después de recibirlas, no por falta de interés sino por cómo procesa la información el cerebro TDAH."},
+    {icon:"🎢", name:"Disregulación emocional intensa", desc:"Las emociones en el TDAH son más rápidas, más intensas y más difíciles de moderar. Lo que para otros es una leve molestia, para una persona con TDAH puede sentirse abrumador."},
+    {icon:"⏰", name:"Ceguera temporal", desc:"Dificultad para percibir el paso del tiempo. Para el cerebro TDAH, el tiempo se divide en 'ahora' y 'no ahora', lo que explica la impuntualidad crónica y la dificultad para planificar a futuro."},
+    {icon:"🚀", name:"Pensamiento divergente acelerado", desc:"La mente TDAH conecta ideas de forma no lineal, saltando de asociación en asociación. Esto puede ser una fuente enorme de creatividad cuando se canaliza bien."},
+    {icon:"🛡️", name:"Enmascaramiento y compensación", desc:"Muchos adultos TDAH han desarrollado sistemas complejos (listas, alarmas, rituales) para funcionar 'normal'. Esto los hace invisibles al diagnóstico pero les cuesta una energía enorme cada día."}
+  ];
+
+  let behHtml = '';
+  behaviours.forEach(b => {
+    behHtml += `<div class="beh-card">
+      <span class="beh-icon">${b.icon}</span>
+      <div class="beh-name">${b.name}</div>
+      <div class="beh-desc">${b.desc}</div>
+    </div>`;
+  });
+  document.getElementById('beh-grid').innerHTML = behHtml;
+
+  let steps = [];
+  if(totalPct >= 45){
+    steps = [
+      {t:"Busca un especialista en TDAH adulto", d:"Pide una derivación a un psiquiatra o psicólogo clínico con experiencia en TDAH en adultos. Menciona que sospechas TDAH — muchos médicos no lo preguntan por defecto."},
+      {t:"Lleva un registro de síntomas durante 2 semanas", d:"Anota situaciones concretas donde experimentes las dificultades. Esto ayuda enormemente al profesional a evaluar el impacto funcional real."},
+      {t:"Explora comunidades de apoyo", d:"Conectar con otras personas neurodivergentes puede ser transformador. El simple acto de reconocerte en la experiencia de otros reduce el aislamiento y la autocrítica."},
+      {t:"Investiga con fuentes fiables", d:"Libros como 'TDAH en adultos' de Russell Barkley o 'Driven to Distraction' de Edward Hallowell son referencias excelentes para entender la condición en profundidad."},
+    ];
+  } else {
+    steps = [
+      {t:"Observa patrones durante las próximas semanas", d:"Aunque tu puntuación no sea alta, si algunas áreas te resonaron, vale la pena observar si esos patrones son constantes en tu vida cotidiana."},
+      {t:"Consulta si el malestar persiste", d:"Si ciertas dificultades te generan malestar real en el trabajo, relaciones o bienestar, no hace falta una puntuación alta para hablar con un profesional."},
+      {t:"Recuerda que el autoconocimiento es valioso", d:"Haber llegado hasta aquí ya dice algo de tu curiosidad y deseo de entenderte mejor. Sigue explorando con apertura y sin juicio."},
+    ];
+  }
+
+  let stepsHtml = '';
+  steps.forEach((s, i) => {
+    stepsHtml += `<li>
+      <div class="step-num">${i+1}</div>
+      <div class="step-text"><strong>${s.t}.</strong> ${s.d}</div>
+    </li>`;
+  });
+  document.getElementById('steps-list').innerHTML = stepsHtml;
+
+  document.getElementById('test-app').style.display = 'none';
+  document.getElementById('results').style.display = 'block';
+  window.scrollTo({top:0, behavior:'smooth'});
+}
+
+function restartTest() {
+  answers = {};
+  page = 0;
+  document.getElementById('test-app').style.display = 'block';
+  document.getElementById('results').style.display = 'none';
+  buildPage(0);
+  window.scrollTo({top: document.getElementById('test-app').offsetTop - 20, behavior:'smooth'});
+}
+
+buildPage(0);
+</script>
+</body>
+</html>
